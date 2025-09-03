@@ -1,7 +1,7 @@
 # Week 1 assignment
 ## Create a new directory 
 ```python
-mkdir BMMB852-week1
+mkdir wk1
 ```
 ## Add a README.md file to the directory
 ```python
