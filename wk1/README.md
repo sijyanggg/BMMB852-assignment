@@ -26,7 +26,8 @@ mkdir -p 2025/fall/week1/data
 ## Commands that create files in different directories
 ```
 touch 2025/fall/week1/data/sample.txt
-touch 2025/fall/week1/notes.txt
+touch 2025/fall/week1/sample2.txt
+echo "hello world" > 2025/fall/week1/data/sample.txt
 ```
 ## Commands to access these files using relative and absolute paths.
 ### Relative paths
