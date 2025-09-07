@@ -1,13 +1,62 @@
 # Week2 Assignment
 ## Organism Info
-Amazona collaria, also called yellow-billed parrot, is a species of parrot in family Psittacidae. It is prefominantly green with short tail and pink thorat and neck. Its habitats are subtropical or tropical moist lowland forests, subtropical or tropical mangrove forests, subtropical or tropical moist montane forests, plantations, and rural gardens. 
-## decompress 
+Accipiter nisus
+## Download and Decompress 
 ```
-gunzip Amazona_collaria.ASM394721v1.115.gff3.gz
+curl -O https://ftp.ensembl.org/pub/release-115/gff3/accipiter_nisus/Accipiter_nisus.Accipiter_nisus_ver1.0.115.gff3.gz
+gunzip Accipiter_nisus.Accipiter_nisus_ver1.0.115.gff3.gz
 ```
 ## Number of sequence regions (chromosomes)
-10638
+44975
 ```
-grep "^##sequence-region" Amazona_collaria.ASM394721v1.115.gff3 | wc -l
+cat Accipiter_nisus.Accipiter_nisus_ver1.0.115.gff3 | grep "^##sequence-region" | wc -l
 ```
-## 
+## Number of features
+867929
+```
+cat Accipiter_nisus.Accipiter_nisus_ver1.0.115.gff3 | grep -v "^#" | wc -l
+```
+## Number of genes
+17271
+```
+cat Accipiter_nisus.Accipiter_nisus_ver1.0.115.gff3 | grep -v "^#" | awk '$3=="gene"' | wc -l
+```
+## List all features in the file
+```
+cat Accipiter_nisus.Accipiter_nisus_ver1.0.115.gff3 | grep -v "^#" | cut -f3 | sort | uniq
+```
+CDS
+V_gene_segment
+Y_RNA
+biological_region
+exon
+five_prime_UTR
+gene
+lnc_RNA
+mRNA
+miRNA
+ncRNA_gene
+pseudogene
+pseudogenic_transcript
+rRNA
+region
+scRNA
+snRNA
+snoRNA
+three_prime_UTR
+transcript
+
+## Top-ten most annotated feature types (column 3) across the genome
+```
+cat Accipiter_nisus.Accipiter_nisus_ver1.0.115.gff3 | grep -v "^#" | cut -f3 | sort | uniq -c | sort -nr | head -10
+```
+309995 exon
+301420 CDS
+133065 biological_region
+44975 region
+27007 mRNA
+18324 five_prime_UTR
+17271 gene
+14159 three_prime_UTR
+ 754 ncRNA_gene
+ 433 lnc_RNA
