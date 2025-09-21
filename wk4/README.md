@@ -1,5 +1,5 @@
 # Week4 Assignment
-assigned Ebola paper
+Assigned Ebola paper
 ## Identify the accession numbers for the genome and write the commands to download the data.
 The sequence data is under NCBI BioGroup: PRJNA257197 where the accesssion number is GCF_000848505.1 
 
@@ -87,6 +87,14 @@ ID=gene-ZEBOVgp7;Dbxref=GeneID:911824;Name=L;gbkey=Gene;gene=L;gene_biotype=prot
 ```
 ### Another gene and its name and function
 Another gene in Ebola virus is VP40. Ebola VP40 is Ebola virus matrix protein which is crucial for virus assembly, budding, and release from host cells. It forms a shell under the viral lipid membrane, acting as a key structural component in the production of new Ebola virions and is essential for the formation of virus-like particles (VLPs). Its funcion involves dynamic structural changes. 
+
+## Look at the genomic features, are these closely packed, is there a lot of intragenomic space? Using IGV estimate how much of the genome is covered by coding sequences.
+Based on the IGV image, the features are tightly packed with short gaps at gene junctions. Based on th IGV, the whole genome is 18.96 kb. Only about 0.8 to 1.1 kb are intragenomic space. Therefore, the coding coverage is about 95%.
+<img width="2047" height="1108" alt="Screenshot 2025-09-20 at 22 14 19" src="https://github.com/user-attachments/assets/7cba0684-7315-4527-93f0-b45d8d4a6b96" />
+
+## Find alternative genome builds that could be used to perhaps answer a different question (find their accession numbers). Considering the focus of the paper, think about what other questions you could answer if you used a different genome build.
+EBOV 1976 Mayinga (NC_002549.1) may be used to perhaps answer a different queation. This genome build is a standard baseline to quantify long-term divergence vs 2014. It can ensure the results are good for the most widesly used EBOV. By using this genome build, it can answer the quantification of fixed nonsynoymous changes and conserved sites across years.
+
 
 
 
