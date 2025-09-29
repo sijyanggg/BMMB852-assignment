@@ -124,6 +124,11 @@ The read 1 is high quality at the start but is noisy at end and shoud be trimmed
 
 ## Compare sequencing platforms
 ### Search the SRA for another dataset for the same genome, but generated using a different sequencing platform
-### Briefly compare the quality or characteristics of the datasets from the two platforms.
+Illumina is the only SRA platform for this virus on NCBI. I chose SRA (SRR: SRR1972937) from another dataset which is also from illumina. 
+<img width="1123" height="605" alt="Screenshot 2025-09-29 at 03 17 08" src="https://github.com/user-attachments/assets/63db9ff3-15aa-4e68-931e-0a964c0366d7" />
 
+<img width="1128" height="621" alt="Screenshot 2025-09-29 at 03 17 24" src="https://github.com/user-attachments/assets/b4cd1418-b220-4d7e-8a98-fa1d53586199" />
+
+### Briefly compare the quality or characteristics of the datasets from the two platforms.
+Both SRAs are from Illumina. All reads fail the FASTQC "Per base sequence quality". The qualities decrease to the end. Those reads contain adapter contamination. The trimming is required. The utilization of another platform may have a better SRA quality. 
 
