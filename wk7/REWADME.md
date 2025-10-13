@@ -109,6 +109,7 @@ NC_002549.1	17601	1056
 ## Select a gene of interest. How many alignments on a forward strand cover the gene?
 Gene: GP
 Alignment for SRR1553500 are 1343 and alignments for ERR1248107 are 170.
+
 Input
 ```
 REGION=$(echo 'NC_002549.1:6,037-8,065' | tr -d ',')
