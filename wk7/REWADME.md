@@ -38,11 +38,15 @@ MinION sequencing; Ebola virus surveillance with portable nanopore sequencing:
 ERR1248107
 
 <img width="1151" height="761" alt="Screenshot 2025-10-12 at 23 40 55" src="https://github.com/user-attachments/assets/e178608e-60c4-44bc-ac7f-ca92d0b7623d" />
+
 ### Questions and Answers
 ## Briefly describe the differences between the alignment in both files.
 SRR1553500 (Illumina) has senven genome-wide coverage, tight piles and few indels. Those are typical short-read shotgun alignment.
 ERR1248107 (Nanopore) has spiky/tiling coverage with dropouts, chunkier reads, many small indels. Those are typical ONT amplicon data.
 ## Briefly compare the statistics for the two BAM files.
+SRR1553500, the Illumina paired-end, has ~20.9k reads with 20k primary. It has an excellent 98.6% mapping rate and ~98% properly paired with only 9 singletons and ~4% supplementary. Those are hallmarks of a clean PE library. ERR1248107, the ONT/MinION single-end, is smaller with ~4.4k reads and 4.3k primary. It has an 87.2% mapping rate , no pairing metrics by design, and ~2.3% supplementary. Overall, the Illumina BAM yields many more reads and higher mapping/pairing quality, while the ONT BAM shows the expected lower mapping rate for long reads but still reasonable alignment quality.
+
+
 Output for SRR1553500
 ```
 20861 + 0 in total (QC-passed reads + QC-failed reads)
@@ -82,6 +86,37 @@ Output for ERR1248107
 0 + 0 with mate mapped to a different chr (mapQ>=5)
 ```
 ## How many primary alignments does each of your BAM files contain?
+The SRR1553500 has 20,000 of primary alignments and the ERR1248107 has 4,338.
 ## What coordinate has the largest observed coverage (hint samtools depth)
+ERR1248107 with depth 1056 has the largest comparing to SRR1553500 with depth 186
+
+Input
+```
+samtools depth -a SRR1553500.bam | sort -k3,3nr | head -1
+```
+Output
+```
+NC_002549.1	5608	186
+```
+Input
+```
+samtools depth -a ERR1248107.bam | sort -k3,3nr | head -1
+```
+Output
+```
+NC_002549.1	17601	1056
+```
 ## Select a gene of interest. How many alignments on a forward strand cover the gene?
+Gene: GP
+Alignment for SRR1553500 are 1343 and alignments for ERR1248107 are 170.
+Input
+```
+REGION=$(echo 'NC_002549.1:6,037-8,065' | tr -d ',')
+echo "$REGION"   # -> NC_002549.1:5265-8515
+samtools view -c -F 2324 bam/SRR1553500.bam "$REGION"
+samtools view -c -F 2324 bam/ERR1248107.bam "$REGION"
+```
+<img width="1055" height="746" alt="Screenshot 2025-10-13 at 00 26 29" src="https://github.com/user-attachments/assets/64805e0d-287b-42b1-abd7-cea2544ca76f" />
+
+
 
