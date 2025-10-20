@@ -1,0 +1,142 @@
+#
+# Makefile for aligning short reads with BWA
+#
+
+# NCBI Genome accession number  
+ACC=NC_002549.1
+
+# The user-friendly name for the genome
+NAME=ebola
+
+# SRR number
+SRR=SRR1553500
+
+# Reference genome
+REF=refs/${NAME}.fa
+
+# Read 1
+R1=reads/${SRR}_1.fastq
+
+# Read 2
+R2=reads/${SRR}_2.fastq
+
+# BAM file
+BAM=bam/${SRR}.bam
+
+# The temporary bedgraph file
+BG=bam/${SRR}.bedgraph
+
+# The BW wiggle file
+BW=bam/${SRR}.bw
+
+# How many reads to download
+N=10000
+
+# Directory for quality control results
+FASTQC_DIR = results/fastqc
+
+# Input FASTQ files (adjust pattern as needed)
+FASTQ_FILES = $(wildcard data/*.fastq.gz)
+
+# Create output file names for all FASTQ inputs
+FASTQC_RESULTS = $(FASTQ_FILES:data/%.fastq.gz=$(FASTQC_DIR)/%.html)
+
+# Setting useful defaults.
+SHELL = bash
+.ONESHELL:
+.SHELLFLAGS = -eu -o pipefail -c
+.DELETE_ON_ERROR:
+MAKEFLAGS += --warn-undefined-variables
+MAKEFLAGS += --no-builtin-rules
+
+# Prints the usage message
+usage:
+	echo "#"
+	echo "# Usage: make [all|refs|fastq|index|align|clean]"    
+	echo "#"
+
+# Obtain the reference genome
+refs:
+	# Create the reference directory
+	# I am extracting the directory name from the path
+	mkdir -p $(dir ${REF})
+
+	# Download the reference genome
+	bio fetch ${ACC} --format fasta > ${REF}
+
+	# Show some information about the genome
+	seqkit stats ${REF}
+	echo "refernce genome downloaded"
+
+# Download a subset of reads from SRA
+# Remove the -X flag to get all data.
+fastq: 
+	# Create the reads directory
+	mkdir -p $(dir ${R1})
+
+	# Download the reads
+	fastq-dump -X ${N} --outdir reads --split-files ${SRR}
+
+	# Show some information about the reads
+	# seqkit stats ${R1} ${R2}
+	@if [ -f reads/$(SRR)_2.fastq ]; then 
+		seqkit stats ${R1} ${R2}; 
+	else 
+		seqkit stats ${R1}; 
+	fi
+
+# Generate FASTQC reports for each read
+fastqc: $(FASTQC_RESULTS)
+	mkdir -p $(FASTQC_DIR)
+	fastqc -o $(FASTQC_DIR) ${R1} ${R2}
+
+
+# Index the reference genome
+index:
+	bwa index ${REF}
+
+# Align the reads and convert to BAM. Use 4 threads
+# Works for paired-end reads. Modify for single-end reads.
+align:
+	# Make the BAM directory
+	mkdir -p $(dir ${BAM})
+
+	# Align the reads
+	# bwa mem -t 4 ${REF} ${R1} ${R2} | samtools sort  > ${BAM}
+	@if [ -f reads/$(SRR)_2.fastq ]; then 
+		bwa mem -t 4 ${REF} ${R1} ${R2} | samtools sort  > ${BAM}; 
+	else 
+		minimap2 -t 4 -ax map-ont ${REF} ${R1} | \
+		 samtools view -b - | \
+		 samtools sort -@ 4 -o bam/ERR1248107.bam; \
+	fi
+
+	# Index the BAM file
+	samtools index ${BAM}
+
+# Generate alignment statistics
+stats:
+	samtools flagstat ${BAM}
+
+# Turn a BAM file into a bigWig file
+wiggle: 
+	# Index the reference genome
+	samtools faidx ${REF}
+
+	# Generate the temporary bedgraph file.
+	LC_ALL=C; bedtools genomecov -ibam  ${BAM} -split -bg | \
+		sort -k1,1 -k2,2n > ${BG}
+
+	# Convert the bedgraph file to bigwig.
+	bedGraphToBigWig ${BG} ${REF}.fai ${BW}
+
+# Clean up generated files
+clean:
+	rm -rf ${REF} ${R1} ${R2} ${BAM} $(FASTQC_DIR) ${BAM}.bai
+
+# Create necessary directories
+all: refs fastq fastqc index align stats wiggle 
+
+# Create necessary directories
+.PHONY: all refs fastq fastqc index align clean stats
+
