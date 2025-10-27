@@ -42,7 +42,7 @@ make ref NAME=ebola ACC=NC_002549.1 BIOPROJECT=PRJNA257197
 ### Test with dry-Run
 preview commands without executing them
 ```
-cat design.csv | head -n 10 | \
+cat design.csv | head -n 11 | \
     parallel --dry-run --colsep , --header : --eta --lb -j 4 \
         make \
         SRR={Run} \
@@ -51,7 +51,7 @@ cat design.csv | head -n 10 | \
 ### Real processing
 Generate results
 ```
-cat design.csv | head -n 10 | \
+cat design.csv | head -n 11 | \
     parallel --colsep , --header : --eta --lb -j 4 \
         make \
         SRR={Run} \
