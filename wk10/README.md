@@ -52,6 +52,20 @@ cat design.csv | head -n 11 | \
         SRR={Run} \
         readparallel
 ```
+## Visualize the single resulting VCF file data alongside the BAM file
+<img width="1149" height="786" alt="Screenshot 2025-11-03 at 00 15 08" src="https://github.com/user-attachments/assets/2fa5d3e9-a464-4208-9c4d-0d203eded398" />
+
+## Multisample VCF
+### Merge VCF files
+```
+ls vcf/*.vcf.gz > vcf/vcf_list.txt 
+bcftools merge -Oz -o vcf/merged_all_samples.vcf.gz -l vcf/vcf_list.txt 
+bcftools index vcf/merged_all_samples.vcf.gz 
+```
+### Visualize the multisample VCF
+<img width="1150" height="787" alt="Screenshot 2025-11-03 at 00 26 54" src="https://github.com/user-attachments/assets/23170175-4455-4284-bd03-58c21afd6631" />
+
+
 
 
 
