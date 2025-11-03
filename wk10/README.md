@@ -44,10 +44,9 @@ SRR=SRR1553500
 make ref SAMPLE=ebola ACC=NC_002549.1 ACC_ANNOTATION=GCF_000848505.1 BIOPROJECT=PRJNA257197
 ```
 
-### Real processing
-Generate results
+### Make BAM and VCF 
 ```
-cat design.csv | head -n 3 | \
+cat design.csv | head -n 11 | \
     parallel --colsep , --header : --eta --lb -j 4 \
         make \
         SRR={Run} \
