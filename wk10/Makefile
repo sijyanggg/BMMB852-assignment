@@ -215,7 +215,14 @@ vep: ${GFF}.gz
 all: refs fastq fastqc index align stats wiggle vcf vep 
 
 # Run parallel reads
-readparallel: fastq fastqc align stats wiggle vcf vep
+readparallel: 
+	make SRR=${SRR} fastq
+	make SRR=${SRR} fastqc
+	make SRR=${SRR} align
+	make SRR=${SRR} stats
+	make SRR=${SRR} wiggle
+	make SRR=${SRR} vcf
+	make SRR=${SRR} vep
 
 # Obtain ref genome and index
 ref: refs index annotations
