@@ -15,7 +15,7 @@ cat design.csv | head -n 11 | \
 ```
 
 | SRR | Sequencing Technologies | Read depth | Mapping quality | coverage uniformity |
-|--------|------|
+|--------|------|------| ------|------|
 | SRR33291168 | ILLUMINA (Illumina NovaSeq X Plus) |
 | SRR33291173 | ULTIMA (UG 100) |
 | SRR33291172 | OXFORD_NANOPORE |
