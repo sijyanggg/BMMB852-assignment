@@ -10,7 +10,7 @@ make ref
 ```
 ### Make BAM
 ```
-cat design.csv \
+cat design.csv | \
     parallel --colsep , --header : --eta --lb -j 4 \
         make \
         SEQTECH={Run} \
