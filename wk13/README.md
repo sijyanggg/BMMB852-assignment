@@ -30,8 +30,9 @@ Exons always have high alignments which indicates it is RNA-Seq data.
 <img width="1283" height="706" alt="Screenshot 2025-12-09 at 21 39 45" src="https://github.com/user-attachments/assets/048c5d6f-acd8-4bd2-8aff-50e8389d1637" />
 
 ## Discussion
+From the count matrix, we inspected several genes and found that the numbers agree well with the alignment tracks in IGV. For example, BMS1P22 shows very low counts in all HBR replicates (0–3) but consistently higher counts in UHR (21–22), and in IGV the UHR tracks display strong, continuous coverage over this gene while HBR tracks are almost flat. Genes with uniformly low counts, such as PSLNR, show only a few isolated reads and almost no visible coverage in any track, matching their near-zero values in the matrix. Conversely, genes with similar counts across all six samples show comparable coverage heights in both HBR and UHR tracks, indicating stable expression. Overall, the visual patterns in IGV support that the featureCounts matrix accurately summarizes gene-level read counts.
 
 
-
+<img width="1292" height="788" alt="Screenshot 2025-12-09 at 21 49 44" src="https://github.com/user-attachments/assets/7f9b51f5-4a35-476d-a928-1777f9212600" />
 
 
