@@ -49,7 +49,12 @@ awk -F, 'NR==1 || $NF+0 < 0.05' edger.csv > edger_fdr0.05.csv
 ```
 <img width="1129" height="142" alt="Screenshot 2025-12-15 at 01 31 50" src="https://github.com/user-attachments/assets/39c0a2d5-b570-45c7-8d21-c1d1f4c03723" />
 Those genes' differential expressions are less than 0.05 FDR.
+
 ## Perform functional enrichment analysis
+```
+bio gprofiler -c edger.csv -d hsapiens
+```
+
 
 
 
